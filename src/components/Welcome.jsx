@@ -44,17 +44,21 @@ const setupTextHover = (container, type) => {
     const mouseX = event.clientX - left;
 
     letters.forEach((letter) => {
-      const letterRect = letter.getBoundingClientRect();
-      const letterCenterX = letterRect.left - (letterRect.width / 2) * left;
-      const distance = Math.abs(mouseX - letterCenterX);
-      const intensity = Math.exp(-(distance ** 2) / 1000);
+      // const letterRect = letter.getBoundingClientRect();
+      // const letterCenterX = letterRect.left - (letterRect.width / 2) * left;
+      // const distance = Math.abs(mouseX - letterCenterX);
+      // const intensity = Math.exp(-(distance ** 2) / 1000);
 
-      const maxDistance = width / 2;
-      const weight =
-        distance < maxDistance
-          ? max - ((max - min) * distance) / maxDistance
-          : base;
-      animateLetter(letter, min + (max - min) * intensity, 0.1);
+      // const maxDistance = width / 2;
+      // const weight =
+      //   distance < maxDistance
+      //     ? max - ((max - min) * distance) / maxDistance
+      //     : base;
+
+      const { left: l, width: w } = letter.getBoundingClientRect();
+      const distance = Math.abs(mouseX - (l - left + w / 2));
+      const intensity = Math.exp(-(distance ** 2) / 20000);
+      animateLetter(letter, min + (max - min) * intensity);
     });
   };
   const handleMouseLeave = () => {
